@@ -1,16 +1,14 @@
 package com.example.gabriel_jayme.repository;
 
-import com.example.gabriel_jayme.domain.Users;
+import com.example.gabriel_jayme.domain.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class UsersDAO {
-    public ArrayList<Users> listarUsuarios(){
-        ArrayList<Users> lista = new ArrayList<Users>();
+    public ArrayList<User> listarUsuarios(){
+        ArrayList<User> lista = new ArrayList<User>();
         String nome,senha;
         int id;
 
@@ -29,7 +27,7 @@ public class UsersDAO {
                 id = rs.getInt("id");
                 nome = rs.getString("name");
                 senha = rs.getString("password");
-                lista.add(new Users(id,nome,senha));
+                lista.add(new User(id,nome,senha));
             }
 
             //fechar as conexões
@@ -41,6 +39,27 @@ public class UsersDAO {
         }
 
         return lista;
+    }
+
+    public User getUser(String password) throws SQLException, ClassNotFoundException {
+
+        Connection con = DatabaseConnection.initializeDatabase();
+
+        String sql = "SELECT * FROM users WHERE password = ?";
+        User user = new User();
+
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setString(1, password);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()){
+            String name = rs.getString("name");
+            String pw = rs.getString("password");
+
+            user.setName(name);
+            user.setPassword(pw);
+        }
+
+        return user;
     }
 
     //Insere um elemento na DB

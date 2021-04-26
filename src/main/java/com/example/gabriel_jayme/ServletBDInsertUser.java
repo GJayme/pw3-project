@@ -7,15 +7,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "ServletDBEndereco", value = "/ServletDBEndereco")
-public class ServletDBEndereco extends HttpServlet {
-
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
+@WebServlet(name = "ServletBDInsertUser", value = "/ServletBDInsertUser")
+public class ServletBDInsertUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
